@@ -30,6 +30,9 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 import classNames from "classnames";
 
+// Ensure this import matches your directory structure
+import { SpeechTrigger } from "./Actions/Triggers/SpeechTrigger";
+
 export const StatefulReaderHeader = ({
   actionKeys,
   actionsOrder, 
@@ -82,6 +85,12 @@ export const StatefulReaderHeader = ({
   const listActionItems = useCallback(() => {
     const actionsItems: ThActionEntry<ActionKeyType>[] = [];
 
+    // Force the addition of our new button
+    actionsItems.push({
+      Trigger: SpeechTrigger,
+      key: "speech-tts" as any
+    });
+
     if (actionsComponentsMap && Object.keys(actionsComponentsMap).length > 0) {
       actionKeys.forEach((key) => {      
         if (actionsComponentsMap[key]) {
@@ -90,8 +99,6 @@ export const StatefulReaderHeader = ({
             Target: actionsComponentsMap[key].Target,
             key: key
           });
-        } else {
-          console.warn(`Action key "${ key }" not found in the plugin registry while present in preferences.`);
         }
       });
     }
@@ -100,7 +107,6 @@ export const StatefulReaderHeader = ({
   }, [actionKeys, actionsComponentsMap]);
 
   useEffect(() => {
-    // Blur any focused element when entering immersive mode
     if (isImmersive) {
       const focusElement = document.activeElement;
       if (focusElement && headerRef.current?.contains(focusElement)) {
@@ -108,6 +114,19 @@ export const StatefulReaderHeader = ({
       }
     }
   }, [isImmersive]);
+
+  // Prevent crashes by defining the key manually
+  const safePrefs = {
+    ...preferences.actions,
+    keys: {
+      ...preferences.actions.keys,
+      "speech-tts": {
+        visibility: "always",
+        order: -1
+      }
+    },
+    displayOrder: ["speech-tts", ...actionsOrder]
+  };
 
   return (
     <>
@@ -133,10 +152,7 @@ export const StatefulReaderHeader = ({
       <StatefulCollapsibleActionsBar 
         id="reader-header-overflowMenu" 
         items={ listActionItems() }
-        prefs={{ 
-          ...preferences.actions, 
-          displayOrder: actionsOrder 
-        }}
+        prefs={ safePrefs as any }
         className={ readerHeaderStyles.actionsWrapper } 
         aria-label={ t("reader.app.header.actions") } 
         overflowMenuClassName={ 
@@ -148,4 +164,4 @@ export const StatefulReaderHeader = ({
     </ThHeader>
     </>
   );
-}
+};
