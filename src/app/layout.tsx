@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 
 import { ThStoreProvider } from "@/lib/ThStoreProvider";
 import { ThPreferencesProvider } from "@/preferences/ThPreferencesProvider";
@@ -31,6 +32,14 @@ export default function RootLayout({
             </ThI18nProvider>
           </ThPreferencesProvider>
         </ThStoreProvider>
+
+        {/*
+          Piper WASM phonemizer — must be loaded globally before PiperEngine 
+          initializes. Defines window.createPiperPhonemize().
+          strategy="beforeInteractive" is not compatible with `export const runtime = "edge"`, 
+          so we use afterInteractive + manual check in PiperEngine.
+        */}
+        <Script src="/tts/piper_phonemize.js" strategy="afterInteractive" />
       </body>
     </html>
   );
