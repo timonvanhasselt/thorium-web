@@ -1,0 +1,17 @@
+{
+  "defaultVoiceId": "OpenVoice-dii-en-GB",
+  "voices": [
+    {
+      "id": "OpenVoice-dii-nl",
+      "name": "Dii - OpenVoiceOS - (Offline NL)",
+      "lang": "nl-NL",
+      "onnxFile": "dii_nl-NL.onnx"
+    },
+    {
+      "id": "OpenVoice-dii-en-GB",
+      "name": "Dii - OpenVoiceOS - (Offline EN-GB)",
+      "lang": "en-GB",
+      "onnxFile": "dii_en-GB.onnx"
+    }
+  ]
+}

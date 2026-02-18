@@ -1,0 +1,4 @@
+OpenVoiceOS voices
+
+https://huggingface.co/collections/OpenVoiceOS/pipertts-voices
+
