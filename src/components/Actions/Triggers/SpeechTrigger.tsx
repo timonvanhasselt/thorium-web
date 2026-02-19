@@ -21,7 +21,7 @@ export const SpeechTrigger = () => {
     padding: 0,
     fontSize: "14px",
     color: "#333",
-    WebkitAppearance: "none", // Gebruik : in plaats van ;
+    WebkitAppearance: "none",
   };
 
   return (
