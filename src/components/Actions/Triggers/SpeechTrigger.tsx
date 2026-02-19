@@ -7,6 +7,7 @@ export const SpeechTrigger = () => {
   const { togglePlay, isPlaying, voices, selectedVoice, setSelectedVoice } = useReadiumSpeech();
 
   // Temp inline styling
+  const buttonStyle: React.CSSProperties = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -20,7 +21,7 @@ export const SpeechTrigger = () => {
     padding: 0,
     fontSize: "14px",
     color: "#333",
-    WebkitAppearance: "none", // for Safari
+    WebkitAppearance: "none", // Gebruik : in plaats van ;
   };
 
   return (
